@@ -1,0 +1,4 @@
+{
+  "mongoURI": "mongodb+srv://sniv:123@cluster0.4ipp3.mongodb.net/csmail?retryWrites=true&w=majority",
+  "jwtSecret": "secret"
+}
