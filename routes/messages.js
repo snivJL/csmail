@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const Message = require("../models/Message");
+const User = require("../models/User");
 const auth = require("../middleware/auth");
 const { validationResult, check } = require("express-validator");
 
@@ -38,14 +39,24 @@ router.post(
     if (!errors.isEmpty())
       return res.status(400).json({ errors: errors.array() });
 
-    const { title, content, from, to } = req.body;
-
     try {
-      const message = new Message({ title, content, from, to });
-      await message.save();
+      const { title, content, from, to } = req.body;
+
+      let sender = await User.findById(from);
+      let receiver = await User.findOne({ email: to });
+      if (!sender || !receiver)
+        return res.status("404").json("User not defined");
+
+      const message = await Message.create({
+        from,
+        to: receiver._id,
+        title,
+        content,
+      });
       res.json({ message });
     } catch (error) {
       console.error(error.message);
+      console.log(req.body);
       res.status(500).json({ msg: "Server error" });
     }
   }
@@ -57,10 +68,15 @@ router.post(
 router.get("/:id", auth, async (req, res) => {
   const msgId = req.params.id;
   try {
-    const message = await Message.findById(msgId)
+    let message = await Message.findById(msgId).populate("from").populate("to");
+    if (!message) return res.status(400).json({ msg: "Message not found" });
+    message = await Message.findByIdAndUpdate(
+      msgId,
+      { $set: { status: "seen" } },
+      { new: true }
+    )
       .populate("from")
       .populate("to");
-    if (!message) return res.status(400).json({ msg: "Message not found" });
     res.json({ message });
   } catch (error) {
     console.error(error.message);
@@ -113,7 +129,11 @@ router.delete("/:id", auth, async (req, res) => {
         .status(401)
         .json({ msg: "Not authorized", req: req.user, message });
 
-    await Message.findByIdAndRemove(req.params.id);
+    await Message.findByIdAndUpdate(
+      req.params.id,
+      { $set: { isDeleted: true } },
+      { new: true }
+    );
     res.json({ message });
   } catch (error) {
     console.error(error.message);

@@ -47,7 +47,7 @@ router.post(
       jwt.sign(
         payload,
         config.get("jwtSecret"),
-        { expiresIn: 3600 },
+        { expiresIn: 360000 },
         (err, token) => {
           if (err) throw err;
           res.json({ token });
@@ -69,9 +69,10 @@ router.get("/:id", (req, res) => {});
 // @desc       Update a  user
 // @access     Private
 router.put("/:id", auth, async (req, res) => {
-  const { name } = req.body;
+  const { name, password } = req.body;
   const userFields = {};
   if (name) userFields.name = name;
+  if (password) userFields.password = password;
 
   const userId = req.params.id;
   try {
