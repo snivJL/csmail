@@ -107,7 +107,9 @@ router.put("/:id", auth, async (req, res) => {
       msgId,
       { $set: messageFields },
       { new: true }
-    );
+    )
+      .populate("from")
+      .populate("to");
     res.json({ message });
   } catch (error) {
     console.error(error.message);

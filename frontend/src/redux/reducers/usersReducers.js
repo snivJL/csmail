@@ -10,6 +10,7 @@ export const usersReducer = (state = initialState, action) => {
       return { ...state, loading: false, user: payload };
     case types.EDIT_USER_FAIL:
       return { ...state, error: payload, loading: false };
+
     default:
       return state;
   }

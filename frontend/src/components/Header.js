@@ -9,15 +9,17 @@ import {
 } from "react-bootstrap";
 import ProfileModal from "../components/ProfileModal";
 import { Link } from "react-router-dom";
-import { LinkContainer } from "react-router-bootstrap";
 import authActions from "../redux/actions/authActions";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 const Header = () => {
   const dispatch = useDispatch();
-  const user = localStorage.getItem("user");
-  console.log("USER", JSON.parse(user));
+  const user = useSelector((state) => state.auth.user);
   const logoutHandler = () => dispatch(authActions.logout());
+  const token = localStorage.getItem("token");
+  useEffect(() => {
+    if (token && token !== undefined) dispatch(authActions.getUser());
+  }, [dispatch]);
 
   return (
     <header>
@@ -41,7 +43,7 @@ const Header = () => {
                   </Nav.Link>
                 </Link>
 
-                <NavDropdown title={JSON.parse(user).user.name} id="username">
+                <NavDropdown title={user.name} id="username">
                   <NavDropdown.Item>
                     <ProfileModal />
                   </NavDropdown.Item>

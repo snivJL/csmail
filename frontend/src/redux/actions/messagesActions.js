@@ -51,10 +51,9 @@ const getSingleMessage = (id) => async (dispatch) => {
   dispatch({ type: types.GET_MESSAGE_REQUEST });
   try {
     const { data } = await api.get(`/messages/${id}`);
-    console.log(data);
-    dispatch({ type: types.GET_MESSAGE_SUCCESS, payload: { data, id } });
+    dispatch({ type: types.GET_MESSAGE_SUCCESS, payload: data.message });
   } catch (error) {
-    console.error("lol");
+    console.error(error.message);
     dispatch({ type: types.GET_MESSAGE_FAIL, payload: error.message });
   }
 };
@@ -75,7 +74,8 @@ const editMessage = (id, message) => async (dispatch) => {
   dispatch({ type: types.EDIT_MESSAGE_REQUEST });
   try {
     const { data } = await api.put(`/messages/${id}`, message);
-    dispatch({ type: types.EDIT_MESSAGE_SUCCESS, payload: data });
+    console.log("DATA", data.message);
+    dispatch({ type: types.EDIT_MESSAGE_SUCCESS, payload: data.message });
   } catch (error) {
     console.error(error.message);
     dispatch({ type: types.EDIT_MESSAGE_FAIL, payload: error.message });

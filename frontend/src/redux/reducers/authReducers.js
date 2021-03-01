@@ -11,14 +11,17 @@ const authReducer = (state = initialState, action) => {
     case types.REGISTER_FAIL:
       return { ...state, error: payload, loading: false };
     case types.LOGIN_SUCCESS:
-      localStorage.setItem("token", payload.token);
-      localStorage.setItem("userID", payload.user._id);
-
       return { ...state, user: payload.user, loading: false, isAuth: true };
     case types.LOGIN_FAIL:
       return { ...state, error: payload, loading: false };
+    case types.GET_USER_REQUEST:
+      return { ...state, loading: true };
+    case types.GET_USER_SUCCESS:
+      return { ...state, loading: false, user: payload };
+    case types.GET_USER_FAIL:
+      return { ...state, error: payload, loading: false };
     case types.LOGOUT:
-      return { ...state, isAuth: false };
+      return { ...state, user: null, isAuth: false };
     default:
       return state;
   }

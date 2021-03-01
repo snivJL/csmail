@@ -16,7 +16,7 @@ export const writeMessageReducer = (state = initialState, action) => {
 };
 
 export const messagesListReducer = (
-  state = { messagesList: {}, filtered: {}, createdFlag: false, loading: true },
+  state = { messagesList: [], filtered: {}, createdFlag: false, loading: true },
   action
 ) => {
   const { type, payload } = action;
@@ -45,13 +45,25 @@ export const messagesListReducer = (
     case types.GET_MESSAGE_SUCCESS:
       return {
         ...state,
-        selectedMessage: payload.data.message,
-        messageList: state.messageList.map((mes) => {
-          if (mes._id === payload.id) return { ...mes, status: "seen" };
-          else return mes;
-        }),
+        selectedMessage: payload,
+        messagesList: state.messagesList.map((mes) =>
+          mes._id === payload._id ? { ...mes, status: "seen" } : mes
+        ),
       };
     case types.GET_MESSAGE_FAIL:
+      return { ...state, loading: false };
+    case types.EDIT_MESSAGE_REQUEST:
+      return { ...state, loading: true };
+    case types.EDIT_MESSAGE_SUCCESS:
+      console.log(payload);
+      return {
+        ...state,
+        messagesList: state.messagesList.map((mes) =>
+          mes._id === payload._id ? payload : mes
+        ),
+        loading: false,
+      };
+    case types.EDIT_MESSAGE_FAIL:
       return { ...state, loading: false };
     case types.DELETE_MESSAGE_REQUEST:
       return { ...state, loading: true };

@@ -10,7 +10,7 @@ import ListMessages from "./components/ListMessages";
 import { Row, Col } from "react-bootstrap";
 
 import { BrowserRouter as Router, Route } from "react-router-dom";
-const user = localStorage.getItem("user");
+const token = localStorage.getItem("token");
 
 function App() {
   return (
@@ -19,7 +19,7 @@ function App() {
         <Header />
         <main>
           <Row>
-            {user && (
+            {token && (
               <>
                 <Col className="pr-0" style={{ maxWidth: "10rem" }}>
                   <Sidebar />
@@ -29,7 +29,6 @@ function App() {
                 </Col>
               </>
             )}
-
             <Col md={6}>
               <Route path="/" component={HomePage} exact />
               <Route path="/compose" component={WriteMessage} />

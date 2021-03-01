@@ -63,7 +63,22 @@ router.post(
 // @route      GET api/users/:id
 // @desc       Get a single user
 // @access     Private
-router.get("/:id", (req, res) => {});
+router.get("/me", auth, async (req, res) => {
+  console.log(req.user);
+  const userId = req.user;
+  try {
+    user = await User.findById(userId);
+    if (!user) return res.status(400).json({ msg: "User not found" });
+
+    if (req.user !== userId)
+      return res.status(401).json({ msg: "Unauthorized" });
+
+    res.json({ user });
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).send("Server error");
+  }
+});
 
 // @route      UPDATE api/users/:id
 // @desc       Update a  user

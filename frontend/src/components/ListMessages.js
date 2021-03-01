@@ -13,7 +13,7 @@ const ListMessages = () => {
   }, [dispatch, createdFlag]);
   return (
     <>
-      {loading ? (
+      {loading && !messagesList ? (
         <Spinner animation="grow" variant="primary" />
       ) : (
         <Row>

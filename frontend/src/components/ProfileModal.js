@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import { Button, Modal, Form } from "react-bootstrap";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import usersActions from "../redux/actions/usersActions";
 
 const ProfileModal = () => {
   const dispatch = useDispatch();
+  const user = useSelector((state) => state.auth.user);
   const [show, setShow] = useState(false);
 
   const [name, setName] = useState("");
@@ -12,8 +13,6 @@ const ProfileModal = () => {
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
-  const userLocalStorage = localStorage.getItem("user");
-  const user = JSON.parse(userLocalStorage).user;
   const handleEdit = (e) => {
     e.preventDefault();
     dispatch(usersActions.editUser(user._id, { name, password }));
