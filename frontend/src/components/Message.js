@@ -10,7 +10,7 @@ const Message = ({ message }) => {
 
   return (
     <div className="flex flex-col border-success p-2 rounded-lg">
-      <div id="message-nav">
+      <div id="message-nav" className="font-weight-bold">
         <Link to={`/message/${message._id}`}>
           <div>{message.title}</div>
         </Link>
@@ -31,10 +31,8 @@ const Message = ({ message }) => {
           ? message.content.slice(0, 18) + "..."
           : message.content}
       </div>
-      <Row className="mt-2">
-        <Col md={6}>
-          <div>{message.from.name}</div>
-        </Col>
+      <Row className="mt-2 font-weight-light">
+        <Col md={6}>{message.from.name}</Col>
         <Col className="px-0" md={6}>
           <Moment fromNow>{message.createdAt}</Moment>
         </Col>

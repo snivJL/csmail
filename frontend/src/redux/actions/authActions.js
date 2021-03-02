@@ -13,6 +13,19 @@ const getUser = () => async (dispatch) => {
     dispatch({ type: types.GET_USER_FAIL, payload: error.message });
   }
 };
+
+const editUser = (id, user) => async (dispatch) => {
+  console.log(user);
+  dispatch({ type: types.EDIT_USER_REQUEST });
+  try {
+    const { data } = await api.put(`/users/${id}`, user);
+    dispatch({ type: types.EDIT_USER_SUCCESS, payload: data.user });
+  } catch (error) {
+    console.error(error.message);
+    dispatch({ type: types.EDIT_USER_FAIL, payload: error.message });
+  }
+};
+
 const register = (values) => async (dispatch) => {
   setLoading();
   try {
@@ -40,6 +53,6 @@ const logout = () => async (dispatch) => {
   dispatch({ type: types.LOGOUT });
 };
 
-const authActions = { register, login, logout, getUser };
+const authActions = { register, editUser, login, logout, getUser };
 
 export default authActions;

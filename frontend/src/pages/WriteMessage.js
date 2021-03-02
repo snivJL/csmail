@@ -1,13 +1,21 @@
-import React from "react";
-import { Container, Col, Row, Form, Button } from "react-bootstrap";
+import React, { useEffect } from "react";
+import { Alert, Col, Row, Form, Button } from "react-bootstrap";
 import { useFormik } from "formik";
 import messagesActions from "../redux/actions/messagesActions";
-import { useDispatch } from "react-redux";
+import authActions from "../redux/actions/authActions";
+import { useDispatch, useSelector } from "react-redux";
 import Sidebar from "../components/Sidebar";
 import ListMessages from "../components/ListMessages";
 
 const WriteMessage = () => {
   const dispatch = useDispatch();
+  const error = useSelector((state) => state.writeMessage.error);
+  const { user } = useSelector((state) => state.auth);
+
+  useEffect(() => {
+    if (!user) dispatch(authActions.getUser());
+  }, [dispatch]);
+
   const validate = (values) => {
     const errors = {};
     if (!values.content) {
@@ -20,7 +28,7 @@ const WriteMessage = () => {
     if (!values.to) {
       errors.to = "Required";
     } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.to)) {
-      errors.email = "Invalid email address";
+      errors.to = "Invalid email address";
     }
 
     return errors;
@@ -34,6 +42,7 @@ const WriteMessage = () => {
     },
     validate,
     onSubmit: (values) => {
+      values.from = user._id;
       dispatch(messagesActions.writeMessage(values));
     },
   });
@@ -47,6 +56,7 @@ const WriteMessage = () => {
         <ListMessages />
       </Col>
       <Col>
+        {error && <Alert>{error}</Alert>}
         <Form onSubmit={formik.handleSubmit}>
           <Form.Group controlId="formBasicEmail">
             <Form.Control

@@ -4,14 +4,13 @@ import api from "../../apiService";
 const setLoading = () => (dispatch) => dispatch({ type: types.SET_LOADING });
 
 const writeMessage = (message) => async (dispatch) => {
-  message.from = localStorage.getItem("userID");
   dispatch({ type: types.WRITE_MESSAGE_REQUEST });
   try {
     await api.post("/messages", message);
     dispatch({ type: types.WRITE_MESSAGE_SUCCESS, payload: message });
   } catch (error) {
-    console.error(error.message);
-    dispatch({ type: types.WRITE_MESSAGE_FAIL });
+    console.error(error.msg);
+    dispatch({ type: types.WRITE_MESSAGE_FAIL, payload: error.msg });
   }
 };
 
@@ -25,8 +24,8 @@ const getMessages = () => async (dispatch) => {
       payload: data.messages.reverse().filter((mess) => !mess.isDeleted),
     });
   } catch (error) {
-    console.error(error.message);
-    dispatch({ type: types.GET_MESSAGES_FAIL, payload: error.message });
+    console.error(error.msg);
+    dispatch({ type: types.GET_MESSAGES_FAIL, payload: error.msg });
   }
 };
 
@@ -42,8 +41,8 @@ const getDeletedMessages = () => async (dispatch) => {
       payload: deletedMessages,
     });
   } catch (error) {
-    console.error(error.message);
-    dispatch({ type: types.GET_MESSAGES_FAIL, payload: error.message });
+    console.error(error.msg);
+    dispatch({ type: types.GET_MESSAGES_FAIL, payload: error.msg });
   }
 };
 
@@ -53,8 +52,8 @@ const getSingleMessage = (id) => async (dispatch) => {
     const { data } = await api.get(`/messages/${id}`);
     dispatch({ type: types.GET_MESSAGE_SUCCESS, payload: data.message });
   } catch (error) {
-    console.error(error.message);
-    dispatch({ type: types.GET_MESSAGE_FAIL, payload: error.message });
+    console.error(error.msg);
+    dispatch({ type: types.GET_MESSAGE_FAIL, payload: error.msg });
   }
 };
 
@@ -64,8 +63,8 @@ const deleteMessage = (id) => async (dispatch) => {
     await api.delete(`/messages/${id}`);
     dispatch({ type: types.DELETE_MESSAGE_SUCCESS, payload: id });
   } catch (error) {
-    console.error(error.message);
-    dispatch({ type: types.DELETE_MESSAGE_FAIL, payload: error.message });
+    console.error(error.msg);
+    dispatch({ type: types.DELETE_MESSAGE_FAIL, payload: error.msg });
   }
 };
 
@@ -77,8 +76,8 @@ const editMessage = (id, message) => async (dispatch) => {
     console.log("DATA", data.message);
     dispatch({ type: types.EDIT_MESSAGE_SUCCESS, payload: data.message });
   } catch (error) {
-    console.error(error.message);
-    dispatch({ type: types.EDIT_MESSAGE_FAIL, payload: error.message });
+    console.error(error.msg);
+    dispatch({ type: types.EDIT_MESSAGE_FAIL, payload: error.msg });
   }
 };
 

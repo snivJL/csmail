@@ -42,15 +42,21 @@ const Header = () => {
                     <i className="fas fa-external-link-alt"></i>New Message
                   </Nav.Link>
                 </Link>
-
-                <NavDropdown title={user.name} id="username">
-                  <NavDropdown.Item>
-                    <ProfileModal />
-                  </NavDropdown.Item>
-                  <NavDropdown.Item onClick={logoutHandler}>
-                    Logout
-                  </NavDropdown.Item>
-                </NavDropdown>
+                <div className="d-flex align-items-center ml-3 ">
+                  <i className="fas fa-user text-primary"></i>
+                  <NavDropdown
+                    className="mx-1 bg-light"
+                    title={user.name}
+                    id="username"
+                  >
+                    <NavDropdown.Item>
+                      <ProfileModal />
+                    </NavDropdown.Item>
+                    <NavDropdown.Item onClick={logoutHandler}>
+                      Logout
+                    </NavDropdown.Item>
+                  </NavDropdown>
+                </div>
               </>
             ) : (
               <>

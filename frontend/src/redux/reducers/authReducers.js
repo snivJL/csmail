@@ -25,6 +25,12 @@ const authReducer = (state = initialState, action) => {
       return { ...state, loading: false, user: payload };
     case types.GET_USER_FAIL:
       return { ...state, error: payload, loading: false };
+    case types.EDIT_USER_REQUEST:
+      return { ...state, loading: true };
+    case types.EDIT_USER_SUCCESS:
+      return { ...state, loading: false, user: payload };
+    case types.EDIT_USER_FAIL:
+      return { ...state, error: payload, loading: false };
     case types.LOGOUT:
       return { ...state, user: null, isAuth: false };
     default:

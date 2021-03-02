@@ -51,7 +51,7 @@ export const messagesListReducer = (
         ),
       };
     case types.GET_MESSAGE_FAIL:
-      return { ...state, loading: false };
+      return { ...state, loading: false, error: payload };
     case types.EDIT_MESSAGE_REQUEST:
       return { ...state, loading: true };
     case types.EDIT_MESSAGE_SUCCESS:

@@ -1,21 +1,21 @@
 import React, { useState } from "react";
 import { Button, Modal, Form } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import usersActions from "../redux/actions/usersActions";
+import authActions from "../redux/actions/authActions";
 
 const ProfileModal = () => {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.auth.user);
   const [show, setShow] = useState(false);
 
-  const [name, setName] = useState("");
-  const [password, setPassword] = useState("");
+  const [name, setName] = useState(user.name);
+  const [password, setPassword] = useState(user.password);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   const handleEdit = (e) => {
     e.preventDefault();
-    dispatch(usersActions.editUser(user._id, { name, password }));
+    dispatch(authActions.editUser(user._id, { name, password }));
     setShow(false);
   };
   return (
@@ -34,6 +34,7 @@ const ProfileModal = () => {
             <Form.Control
               onChange={(e) => setName(e.target.value)}
               name="title"
+              value={name}
               placeholder="name"
             />
           </Form.Group>

@@ -45,7 +45,9 @@ router.post(
       let sender = await User.findById(from);
       let receiver = await User.findOne({ email: to });
       if (!sender || !receiver)
-        return res.status("404").json("User not defined");
+        return res
+          .status("404")
+          .json("User doesn't exist, please choose another email");
 
       const message = await Message.create({
         from,

@@ -48,7 +48,7 @@ const LoginPage = () => {
     <Container className="d-flex justify-content-center">
       <Row>
         <Col md={12} style={{ width: "30rem" }}>
-          {auth.error && <Alert variant="danger">{auth.error.msg}</Alert>}
+          {auth.error && <Alert variant="warning">{auth.error.msg}</Alert>}
 
           <Form
             onSubmit={formik.handleSubmit}
