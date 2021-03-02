@@ -29,9 +29,9 @@ const login = (values) => async (dispatch) => {
     const res = await api.post("/auth", values);
     console.log("RES", res);
     dispatch({ type: types.LOGIN_SUCCESS, payload: res.data });
-    localStorage.setItem("token", res.data);
+    localStorage.setItem("token", res.data.token);
   } catch (error) {
-    dispatch({ type: types.LOGIN_FAIL, payload: error.message });
+    dispatch({ type: types.LOGIN_FAIL, payload: error.msg });
     console.error(error);
   }
 };

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Form, Container, Row, Col, Button } from "react-bootstrap";
+import { Form, Container, Row, Col, Button, Alert } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
 import { useFormik } from "formik";
 import { useDispatch, useSelector } from "react-redux";
@@ -45,14 +45,16 @@ const LoginPage = () => {
     },
   });
   return (
-    <Container>
-      <Row className="justify-content-center ">
-        <Col md={6}>
+    <Container className="d-flex justify-content-center">
+      <Row>
+        <Col md={12} style={{ width: "30rem" }}>
+          {auth.error && <Alert variant="danger">{auth.error.msg}</Alert>}
+
           <Form
             onSubmit={formik.handleSubmit}
             className="align-items-center border rounded p-4"
           >
-            <h2>Log In</h2>
+            <h2 className="text-center pb-2">Log In</h2>
             <Form.Group controlId="formGroupEmail">
               <Form.Label>Email address</Form.Label>
               <Form.Control

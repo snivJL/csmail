@@ -1,5 +1,10 @@
 import * as types from "../constants/authConstants";
-const initialState = { user: {}, error: null, loading: false, isAuth: false };
+const initialState = {
+  user: null,
+  error: null,
+  loading: false,
+  isAuth: !!localStorage.getItem("token"),
+};
 
 const authReducer = (state = initialState, action) => {
   const { type, payload } = action;

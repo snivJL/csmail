@@ -5,7 +5,12 @@ import messagesActions from "../redux/actions/messagesActions";
 const Sidebar = () => {
   const dispatch = useDispatch();
   return (
-    <ListGroup as="ul" variant="flush" style={{ maxWidth: "10rem" }}>
+    <ListGroup
+      className="text-center"
+      as="ul"
+      variant="flush"
+      style={{ maxWidth: "10rem" }}
+    >
       <ListGroup.Item
         as="li"
         action

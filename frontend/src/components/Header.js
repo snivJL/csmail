@@ -63,6 +63,13 @@ const Header = () => {
               </>
             )}
           </Nav>
+          <Button variant="success">success</Button>
+          <Button variant="danger">danger</Button>
+          <Button variant="primary">primary</Button>
+          <Button variant="dark">dark</Button>
+          <Button variant="light">light</Button>
+          <Button variant="warning">warning</Button>
+
           <Form inline>
             <FormControl type="text" placeholder="Search" className="mr-sm-2" />
             <Button variant="outline-success">Search</Button>

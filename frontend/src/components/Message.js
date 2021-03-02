@@ -9,13 +9,13 @@ const Message = ({ message }) => {
   const dispatch = useDispatch();
 
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col border-success p-2 rounded-lg">
       <div id="message-nav">
         <Link to={`/message/${message._id}`}>
           <div>{message.title}</div>
         </Link>
         <Button
-          variant="light"
+          variant="outline-warning"
           onClick={() => dispatch(messagesActions.deleteMessage(message._id))}
           type="button"
         >

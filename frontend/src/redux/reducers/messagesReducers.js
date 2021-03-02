@@ -86,6 +86,7 @@ export const messagesListReducer = (
           ? state.messagesList.filter((mess) => mess.status === "seen")
           : state.messagesList.filter((mess) => mess.status === "unseen"),
       };
+
     default:
       return state;
   }

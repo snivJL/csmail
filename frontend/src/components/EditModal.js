@@ -21,11 +21,11 @@ const EditModal = ({ message }) => {
 
   return (
     <>
-      <Button variant="light" onClick={handleShow}>
+      <Button variant="outline-warning" onClick={handleShow}>
         <i className="fas fa-edit"></i>
       </Button>
 
-      <Modal show={show} onHide={handleClose}>
+      <Modal className="fade" show={show} onHide={handleClose}>
         <Modal.Header closeButton>
           <Modal.Title>Edit Message</Modal.Title>
         </Modal.Header>

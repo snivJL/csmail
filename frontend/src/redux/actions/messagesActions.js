@@ -85,6 +85,7 @@ const editMessage = (id, message) => async (dispatch) => {
 const filterMessages = (bool) => (dispatch) => {
   dispatch({ type: types.FILTER_MESSAGES, payload: bool });
 };
+
 const messagesActions = {
   writeMessage,
   getMessages,
