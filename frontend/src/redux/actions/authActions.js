@@ -9,8 +9,8 @@ const getUser = () => async (dispatch) => {
     const { data } = await api.get("/users/me");
     dispatch({ type: types.GET_USER_SUCCESS, payload: data.user });
   } catch (error) {
-    console.error(error.message);
-    dispatch({ type: types.GET_USER_FAIL, payload: error.message });
+    console.error(error.msg);
+    dispatch({ type: types.GET_USER_FAIL, payload: error.msg });
   }
 };
 
@@ -21,8 +21,8 @@ const editUser = (id, user) => async (dispatch) => {
     const { data } = await api.put(`/users/${id}`, user);
     dispatch({ type: types.EDIT_USER_SUCCESS, payload: data.user });
   } catch (error) {
-    console.error(error.message);
-    dispatch({ type: types.EDIT_USER_FAIL, payload: error.message });
+    console.error(error.msg);
+    dispatch({ type: types.EDIT_USER_FAIL, payload: error.msg });
   }
 };
 
@@ -31,16 +31,16 @@ const register = (values) => async (dispatch) => {
   try {
     const res = await api.post("/users", values);
     if (res.status === 200) dispatch({ type: types.REGISTER_SUCCESS });
+    localStorage.setItem("token", res.data.token);
   } catch (error) {
-    console.error(error.message);
-    dispatch({ type: types.REGISTER_FAIL, payload: error.message });
+    console.error(error.msg);
+    dispatch({ type: types.REGISTER_FAIL, payload: error.msg });
   }
 };
 const login = (values) => async (dispatch) => {
   setLoading();
   try {
     const res = await api.post("/auth", values);
-    console.log("RES", res);
     dispatch({ type: types.LOGIN_SUCCESS, payload: res.data });
     localStorage.setItem("token", res.data.token);
   } catch (error) {

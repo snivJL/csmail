@@ -1,12 +1,17 @@
 import React, { useState, useEffect } from "react";
-import { Form, Container, Row, Col, Button } from "react-bootstrap";
+import { Form, Container, Row, Col, Button, Alert } from "react-bootstrap";
 import { useFormik } from "formik";
-import { useDispatch } from "react-redux";
+import { useHistory } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 import authActions from "../redux/actions/authActions";
 
 const RegisterPage = () => {
   const dispatch = useDispatch();
-
+  const history = useHistory();
+  const auth = useSelector((state) => state.auth);
+  useEffect(() => {
+    if (!auth.errors && auth.isAuth) history.push("/login");
+  }, [auth.errors, history, auth.isAuth]);
   const validate = (values) => {
     const errors = {};
     if (!values.name) {
@@ -46,6 +51,8 @@ const RegisterPage = () => {
     <Container>
       <Row className="justify-content-center ">
         <Col md={6}>
+          {auth.error && <Alert variant="warning">{auth.error.msg}</Alert>}
+
           <Form
             onSubmit={formik.handleSubmit}
             className="align-items-center border rounded p-4"

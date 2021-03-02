@@ -12,7 +12,7 @@ const authReducer = (state = initialState, action) => {
     case types.SET_LOADING:
       return { ...state, loading: true };
     case types.REGISTER_SUCCESS:
-      return { ...state, loading: false };
+      return { ...state, loading: false, isAuth: true };
     case types.REGISTER_FAIL:
       return { ...state, error: payload, loading: false };
     case types.LOGIN_SUCCESS:

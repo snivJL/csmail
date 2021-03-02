@@ -10,8 +10,8 @@ const LoginPage = () => {
   const auth = useSelector((state) => state.auth);
   const history = useHistory();
   useEffect(() => {
-    if (!auth.errors && auth.isAuth) history.push("/");
-  }, [auth.errors, history, auth.isAuth]);
+    if (!auth.errors && auth.user) history.push("/");
+  }, [auth.errors, history, auth.user]);
   const validate = (values) => {
     const errors = {};
 
